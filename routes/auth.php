@@ -14,10 +14,11 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\NoteController;
+use App\Http\Middleware\CheckNoteAccess;
 
 Route::middleware('guest')->group(function () {
     Route::get('auth', [RegisteredUserController::class, 'createAuth'])
-    ->name('auth');
+        ->name('auth');
 
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');
@@ -42,21 +43,52 @@ Route::middleware('guest')->group(function () {
         ->name('password.store');
 });
 
+// Route::middleware('auth', CheckNoteAccess::class)->group(function () {
+
+//     // Отображение редактора
+   
+//     Route::get('/dashboard', DashboardController::class)->name('dashboard');
+
+
+//     // Profile
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
+//     Route::get('verify-email', EmailVerificationPromptController::class)
+//         ->name('verification.notice');
+
+//     Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
+//         ->middleware(['signed', 'throttle:6,1'])
+//         ->name('verification.verify');
+
+//     Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+//         ->middleware('throttle:6,1')
+//         ->name('verification.send');
+
+//     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
+//         ->name('password.confirm');
+
+//     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+
+//     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+
+//     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+//         ->name('logout');
+// });
+
+
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', DashboardController::class)->name('dashboard');
-    
-    // Books
-    Route::resource('books', BookController::class); 
-    
-    // Notes
-    Route::get('/notes', [NoteController::class, 'index'])->name('notes.index');
-    
-    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-
+    // Dashboard и другие общие маршруты
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    
+    Route::get('/notes', [NoteController::class, 'index'])->name('notes.index');
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 
@@ -77,4 +109,28 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
+
+    // Книги (без middleware note.access)
+    Route::resource('books', BookController::class);
+    Route::post('/books/{book}/themes', [BookController::class, 'addTheme'])->name('books.themes.store');
+    Route::delete('/books/{book}/themes/{theme}', [BookController::class, 'deleteTheme'])->name('books.themes.destroy');
+    
+    // Заметки (с middleware note.access)
+    // Route::middleware(CheckNoteAccess::class)->group(function () {
+    //     Route::get('/book/{book}/{theme?}/{note}', [NoteController::class, 'show'])
+    //         ->where('note', '.*?(\.md)?$')
+    //         ->name('notes.show');
+        
+    //     Route::get('/book/{book}/{theme?}/{note}', [NoteController::class, 'raw'])
+    //         ->where('note', '.*?(\.md)?$')
+    //         ->name('notes.raw');
+        
+    //     Route::post('/book/{book}/{theme?}/{note}', [NoteController::class, 'save'])
+    //         ->where('note', '.*?(\.md)?$')
+    //         ->name('notes.save');
+        
+    //     Route::delete('/book/{book}/{theme?}/{note}', [NoteController::class, 'delete'])
+    //         ->where('note', '.*?(\.md)?$')
+    //         ->name('notes.delete');
+    // });
 });

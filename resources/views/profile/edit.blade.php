@@ -1,4 +1,7 @@
-<x-layouts.dashboard>
+@extends("layouts.app")
+@section("content")
+
+
     @section('title', 'Profile')
 
     <div class="max-w-2xl mx-auto bg-toolbar-background p-6 rounded-lg border border-muted">
@@ -69,4 +72,4 @@
             </div>
         </form>
     </div>
-</x-layouts.dashboard>
+@endsection

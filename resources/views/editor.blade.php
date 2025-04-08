@@ -22,6 +22,29 @@
                 editor.CodeMirror.focus();
             }
         });
+
+        window.abonEditor.save = async function () {
+            fetch('{{ $saveUrl }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                content: window.abonEditor.getContent()
+            })
+        })
+
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                this.showToast('Сохранено успешно');
+            } else {
+                this.showToast('Ошибка при сохранении', false);
+            }
+            
+        });
+        }
     </script>
 </body>
 </html>

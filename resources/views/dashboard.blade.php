@@ -1,4 +1,5 @@
-<x-layouts.dashboard header="Dashboard">
+@extends('layouts.app')
+@section('content')
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Ваш контент dashboard -->
         <div class="bg-toolbar-background rounded-lg p-6 border border-muted">
@@ -75,4 +76,4 @@
             @endif
         </div>
     </div>
-    </x-layouts.dashboard>
+@endsection
