@@ -19,12 +19,12 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        return view('auth.auth', ["event" => "register"]);
     }
 
     public function createAuth(): View
     {
-        return view('auth.auth');
+        return view('auth.auth', ["event" => "register"]);
     }
 
     /**

@@ -165,6 +165,14 @@
             document.getElementById('login-form').classList.remove('hidden');
             document.getElementById('reset-form').classList.add('hidden');
         });
+
+
+
+        @if($event === 'login')
+            document.getElementById('show-login').click();
+        @elseif($event === 'register')
+            document.getElementById('show-register').click();
+        @endif
     </script>
 </body>
 

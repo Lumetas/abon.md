@@ -9,7 +9,11 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\NoteController;
 
 Route::middleware('guest')->group(function () {
     Route::get('auth', [RegisteredUserController::class, 'createAuth'])
@@ -39,6 +43,20 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    
+    // Books
+    Route::resource('books', BookController::class); 
+    
+    // Notes
+    Route::get('/notes', [NoteController::class, 'index'])->name('notes.index');
+    
+    // Profile
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 
