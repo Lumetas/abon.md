@@ -193,6 +193,14 @@
     color: var(--selection-text-color);
   }
   
+  .btn-danger {
+    background:var(--text-color);
+  }
+
+  .btn-danger:hover {
+    background:var(--heading-color);
+  }
+
   .btn-primary:hover {
     background-color: var(--link-hover-color);
   }
@@ -222,7 +230,14 @@
   
   .d-none { display: none; }
   .d-block { display: block; }
-  
+  table {
+    width:100%;
+  }
+
+  tbody td:last-child{
+    text-align: right;
+  }
+
   /* Tablet and Desktop Styles */
   @media (min-width: 768px) {
     .dashboard-container {

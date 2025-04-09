@@ -4,6 +4,7 @@ body {
 	--text-color: #F8F8F2; /* Основной текст */
 	--muted-text: #75715E;  /* Комментарии, второстепенный текст */
     --toolbar-background: #2F3129; /* Фон тулбара */
+	--primary: var(--blockquote-background);
     --toolbar-color: var(--muted-text); /* цвета элементов тулбара */
 
 	/* Ссылки */
