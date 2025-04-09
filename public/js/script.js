@@ -76,14 +76,14 @@ window.abonEditor = {
 // Обработка горячих клавиш
 document.addEventListener('keydown', function(event) {
     // Ctrl+S - сохранение
-    if ((event.ctrlKey || event.metaKey) && event.key === 's') {
+    if ((event.ctrlKey || event.metaKey) && event.code === 'KeyS') {
         event.preventDefault(); // Предотвращаем стандартное сохранение страницы
         window.abonEditor.save();
         return false;
     }
 
     // Ctrl+M - переключение preview (если нужно)
-    if ((event.ctrlKey || event.metaKey) && event.key === 'm') {
+    if ((event.ctrlKey || event.metaKey) && event.code === 'KeyM') {
         event.preventDefault();
         easymde.togglePreview()
         return false;
