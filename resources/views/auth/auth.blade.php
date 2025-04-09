@@ -84,7 +84,7 @@
             </form>
             <div class="auth-footer">
             No account? <a href="#" id="show-register">Register!</a><br>
-                <a href="#" id="show-reset">Forgot password?</a>
+                <!-- <a href="#" id="show-reset">Forgot password?</a> -->
             </div>
         </div>
 
@@ -152,12 +152,12 @@
             document.getElementById('reset-form').classList.add('hidden');
         });
 
-        document.getElementById('show-reset').addEventListener('click', function (e) {
-            e.preventDefault();
-            document.getElementById('register-form').classList.add('hidden');
-            document.getElementById('login-form').classList.add('hidden');
-            document.getElementById('reset-form').classList.remove('hidden');
-        });
+        // document.getElementById('show-reset').addEventListener('click', function (e) {
+        //     e.preventDefault();
+        //     document.getElementById('register-form').classList.add('hidden');
+        //     document.getElementById('login-form').classList.add('hidden');
+        //     document.getElementById('reset-form').classList.remove('hidden');
+        // });
 
         document.getElementById('show-login-from-reset').addEventListener('click', function (e) {
             e.preventDefault();
