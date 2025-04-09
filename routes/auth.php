@@ -115,22 +115,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/books/{book}/themes', [BookController::class, 'addTheme'])->name('books.themes.store');
     Route::delete('/books/{book}/themes/{theme}', [BookController::class, 'deleteTheme'])->name('books.themes.destroy');
     
-    // Заметки (с middleware note.access)
-    // Route::middleware(CheckNoteAccess::class)->group(function () {
-    //     Route::get('/book/{book}/{theme?}/{note}', [NoteController::class, 'show'])
-    //         ->where('note', '.*?(\.md)?$')
-    //         ->name('notes.show');
-        
-    //     Route::get('/book/{book}/{theme?}/{note}', [NoteController::class, 'raw'])
-    //         ->where('note', '.*?(\.md)?$')
-    //         ->name('notes.raw');
-        
-    //     Route::post('/book/{book}/{theme?}/{note}', [NoteController::class, 'save'])
-    //         ->where('note', '.*?(\.md)?$')
-    //         ->name('notes.save');
-        
-    //     Route::delete('/book/{book}/{theme?}/{note}', [NoteController::class, 'delete'])
-    //         ->where('note', '.*?(\.md)?$')
-    //         ->name('notes.delete');
-    // });
+
 });

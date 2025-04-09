@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Note;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
 {
@@ -21,7 +21,7 @@ class DashboardController extends Controller
             ->latest()
             ->take(5)
             ->get();
-
-        return view('dashboard', compact('books', 'recentNotes'));
+        $userId = auth()->id();
+        return view('dashboard', ["books" => Storage::disk('local')->directories("vaults/{$userId}")]);
     }
 }

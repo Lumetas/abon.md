@@ -8,13 +8,13 @@ use Illuminate\Support\Str;
 
 class NoteController extends Controller
 {
-    private function getNotePath($userId, $book, $theme = null, $note)
-    {
-        $note = Str::finish($note, '.md');
-        $path = "vaults/{$userId}/{$book}";
-        if ($theme) $path .= "/{$theme}";
-        return "{$path}/{$note}";
-    }
+        private function getNotePath($userId, $book, $theme = null, $note)
+        {
+            $note = Str::finish($note, '.md');
+            $path = "vaults/{$userId}/{$book}";
+            if ($theme) $path .= "/{$theme}";
+            return "{$path}/{$note}";
+        }
 
     public function show($book, $theme = null, $note)
     {
@@ -54,12 +54,11 @@ class NoteController extends Controller
 
     public function delete($book, $theme = null, $note)
     {
-        $path = $this->getNotePath(auth()->id(), $book, $theme, $note);
-        
-        if (Storage::disk('local')->exists($path)) {
-            Storage::disk('local')->delete($path);
+
+        if (Storage::disk('local')->exists($note)) {
+            Storage::disk('local')->delete($note);
         }
-        
-        return response()->json(['status' => 'success']);
+
+        return redirect()->route('books.show', ['book' => $book]);
     }
 }

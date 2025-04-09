@@ -105,3 +105,22 @@ document.addEventListener('DOMContentLoaded', function() {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { easymde, abonEditor };
 }
+
+function addButtonInToolBar(fa, callback){
+    const saveBtn = document.createElement('button');
+    let i = document.createElement('i');
+    i.classList = fa;
+    saveBtn.appendChild(i);
+    saveBtn.onclick = callback;
+    document.querySelector('.editor-toolbar').appendChild(saveBtn);
+}
+
+function addSeperatorInToolBar() {
+    let i = document.createElement('i');
+    i.classList = "separator";
+    i.innerHTML = "|";
+    document.querySelector('.editor-toolbar').appendChild(i);
+}
+
+addSeperatorInToolBar();
+addButtonInToolBar("fa fa-save", function(){window.abonEditor.save();});
