@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
 </head>
 <body>
-    <textarea id="my-text-area">{{ $content ?? '' }}</textarea>
+    <textarea style="display:none;" id="my-text-area">{{ $content ?? '' }}</textarea>
 
     <script src="{{ asset('js/easymde.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
@@ -42,7 +42,7 @@
             } else {
                 this.showToast('Ошибка при сохранении', false);
             }
-            
+
         });
         }
     </script>
