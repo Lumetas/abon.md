@@ -19,10 +19,10 @@ class NoteController extends Controller
     public function show($book, $theme = null, $note)
     {
         $path = $this->getNotePath(auth()->id(), $book, $theme, $note);
-        $content = Storage::disk('local')->exists($path) 
-            ? Storage::disk('local')->get($path) 
+        $content = Storage::disk('local')->exists($path)
+            ? Storage::disk('local')->get($path)
             : '';
-        
+
         return view('editor', [
             'content' => $content,
             'saveUrl' => route('notes.save', compact('book', 'theme', 'note')),
@@ -33,11 +33,11 @@ class NoteController extends Controller
     public function raw($book, $theme = null, $note)
     {
         $path = $this->getNotePath(auth()->id(), $book, $theme, $note);
-        
+
         if (!Storage::disk('local')->exists($path)) {
             abort(404);
         }
-        
+
         return response(Storage::disk('local')->get($path))
             ->header('Content-Type', 'text/markdown');
     }
@@ -45,20 +45,21 @@ class NoteController extends Controller
     public function save(Request $request, $book, $theme = null, $note)
     {
         $request->validate(['content' => 'required|string']);
-        
+
         $path = $this->getNotePath(auth()->id(), $book, $theme, $note);
         Storage::disk('local')->put($path, $request->content);
-        
+
         return response()->json(['status' => 'success']);
     }
 
     public function delete($book, $theme = null, $note)
     {
 
-        if (Storage::disk('local')->exists($note)) {
-            Storage::disk('local')->delete($note);
-        }
+        $path = $this->getNotePath(auth()->id(), $book, $theme, $note);
+        if (Storage::disk('local')->exists($path)) {
+            Storage::disk('local')->delete($path);
+        } else { dd($book, $theme, $note, $path);}
 
-        return redirect()->route('books.show', ['book' => $book]);
+        return json_encode(["success" => true]);
     }
 }

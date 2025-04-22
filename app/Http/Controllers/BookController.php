@@ -12,7 +12,7 @@ class BookController extends Controller
     {
         $userId = auth()->id();
         $books = Storage::disk('local')->directories("vaults/{$userId}");
-        
+
         return view('books.index', [
             'books' => array_map('basename', $books)
         ]);
@@ -21,10 +21,10 @@ class BookController extends Controller
     public function store(Request $request)
     {
         $request->validate(['name' => 'required|string|max:255']);
-        
+
         $path = "vaults/".auth()->id()."/".Str::slug($request->name);
         Storage::disk('local')->makeDirectory($path);
-        
+
         return redirect()->route('books.index');
     }
 
@@ -33,7 +33,7 @@ class BookController extends Controller
         $path = "vaults/".auth()->id()."/{$book}";
         $themes = Storage::disk('local')->directories($path);
         $notes = Storage::disk('local')->files($path);
-        
+
         return view('books.show', [
             'book' => $book,
             'themes' => array_map('basename', $themes),
@@ -48,10 +48,10 @@ class BookController extends Controller
     public function addTheme(Request $request, $book)
     {
         $request->validate(['name' => 'required|string|max:255']);
-        
+
         $path = "vaults/".auth()->id()."/{$book}/".Str::slug($request->name);
         Storage::disk('local')->makeDirectory($path);
-        
+
         return back();
     }
 
@@ -59,15 +59,15 @@ class BookController extends Controller
     {
         $path = "vaults/".auth()->id()."/{$book}/{$theme}";
         Storage::disk('local')->deleteDirectory($path);
-        
-        return back();
+
+        return json_encode(["success" => true]);
     }
 
     public function destroy($book)
     {
         $path = "vaults/".auth()->id()."/{$book}";
         Storage::disk('local')->deleteDirectory($path);
-        
+
         return redirect()->route('books.index');
     }
 }
