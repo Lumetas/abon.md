@@ -1,0 +1,9 @@
+return {
+  cmd = "artisan",
+  controllers = "app/Http/Controllers",
+  migrations = "database/migrations",
+  models = "app/Models",
+  routes = "routes",
+  seeders = "database/seeders",
+  views = "resources/views"
+}
